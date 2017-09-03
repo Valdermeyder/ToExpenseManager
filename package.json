@@ -2,16 +2,21 @@
   "name": "citi_to_expense_manager_csv_converter",
   "version": "1.0.0",
   "description": "Convert CSV files from Citi to Expense Manager format",
-  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Valdermeyder/CityToExpenseManager.git"
+  },
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "csv",
     "expense",
-    "coverter"
+    "converter"
   ],
   "author": "Volodymyr Huzar",
+  "email": "vguzar@i.ua",
   "license": "ISC",
   "dependencies": {
     "csv": "^1.1.1",

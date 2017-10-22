@@ -3,7 +3,7 @@ const url = require('url')
 const cityConverter = require('./cityConverter')
 
 http.createServer((request, response) => {
-	let reqUrl = url.parse(request.url, true);
+	const reqUrl = url.parse(request.url, true);
 	const pathname = reqUrl.pathname
 
 	if (pathname === '/convert') {

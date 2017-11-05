@@ -19,17 +19,14 @@ const getExpanseManagerRecord = record => {
 		+ ',,,CitiBank\n'
 }
 
-exports.convertCvsFile = input => {
-	const readStream = fs.createReadStream(input);
-
-	readStream.on('error', console.error)
-
-	return readStream
+exports.convertCvsFile = (input, onError = console.error) =>
+	fs.createReadStream(input)
+		.on('error', onError)
 		.pipe(csv.parse({ delimiter: ',', columns, relax_column_count: true }))
+		.on('error', onError)
 		.pipe(csv.transform((record, callback) => {
 			const description = record[columns[1]]
 			if (!(description && description.startsWith('SPŁATA-'))) {
 				setTimeout(() => callback(null, getExpanseManagerRecord(record)))
 			}
 		}))
-}

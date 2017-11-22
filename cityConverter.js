@@ -1,5 +1,5 @@
-const fs = require('fs')
-const csv = require('csv')
+const parseSync = require('csv-parse/lib/sync')
+const transform = require('stream-transform')
 const moment = require('moment')
 const categoryResolver = require('./categoryResolver')
 
@@ -19,14 +19,6 @@ const getExpanseManagerRecord = record => {
 		+ ',,,CitiBank\n'
 }
 
-exports.convertCvsFile = (input, onError = console.error) =>
-	fs.createReadStream(input)
-		.on('error', onError)
-		.pipe(csv.parse({ delimiter: ',', columns, relax_column_count: true }))
-		.on('error', onError)
-		.pipe(csv.transform((record, callback) => {
-			const description = record[columns[1]]
-			if (!(description && description.startsWith('SPŁATA-'))) {
-				setTimeout(() => callback(null, getExpanseManagerRecord(record)))
-			}
-		}))
+exports.convertCvsFileData = (input) =>
+	transform(parseSync(input, { delimiter: ',', columns, relax_column_count: true }),
+		record => getExpanseManagerRecord(record))

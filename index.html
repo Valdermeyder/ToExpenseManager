@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>City To ExpenseManager Converter</title>
 </head>
+
 <body>
-Hello, I'm a converter. Use /convert?pahtname=<file_path> to convert the file
-<!-- <input type="file"/> -->
+    Hello, I'm a converter. Please choose the file and submit the form
+    <form method="post" enctype="multipart/form-data">
+        <div>
+            <label for="file">Choose file to upload</label>
+            <input type="file" id="file" name="file">
+        </div>
+        <div>
+            <button>Submit</button>
+        </div>
+    </form>
 </body>
+
 </html>

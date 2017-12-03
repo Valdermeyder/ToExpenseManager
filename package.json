@@ -8,7 +8,7 @@
   },
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "csv",
@@ -29,6 +29,8 @@
     "eslint": "^4.8.0",
     "eslint-config-esnext": "^1.6.0",
     "eslint-config-node": "^1.6.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.3.2",
+    "jest": "^21.2.1"
   }
 }

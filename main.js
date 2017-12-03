@@ -17,10 +17,12 @@ app.get('/', (request, response) => {
 	response.sendFile(path.join(__dirname, 'index.html'))
 })
 
-app.post('/', (request, response) => {
-	if (request.files && request.files.file) {
+const getCategoriesMapping = (file = {}) => file.data && JSON.parse(file.data)
+
+app.post('/', ({files}, response) => {
+	if (files && files.file) {
 		cityConverter
-			.convertCvsFileData(request.files.file.data)
+			.convertCvsFileData(files.file.data, getCategoriesMapping(files.categoriesMapping))
 			.on('finish', () => response.end())
 			.on('error', getHttpErrorHandler(response))
 			.pipe(response);

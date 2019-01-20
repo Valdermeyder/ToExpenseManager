@@ -19,6 +19,15 @@ test('should parse exact name of payer and configuration entity', () => {
     expect(categoryResolver.resolveCategory(categoriesMapping)('CARREFOUR')).toEqual(groceries)
 })
 
+test('should be case insensetive when parse name of payer and configuration entity', () => {
+    expect(categoryResolver.resolveCategory(categoriesMapping)('carrefour')).toEqual(groceries)
+})
+
+
+test('should be able to use part of word when parse name of payer and configuration entity', () => {
+    expect(categoryResolver.resolveCategory(categoriesMapping)('carrefour.pl')).toEqual(groceries)
+})
+
 test('should parse name of payer part of each is present in configuration entity', () => {
     expect(categoryResolver.resolveCategory(categoriesMapping)('CARREFOUR EXPRESS 3561')).toEqual(groceries)
 })

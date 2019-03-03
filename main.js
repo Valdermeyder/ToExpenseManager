@@ -4,7 +4,7 @@ const fileUpload = require('express-fileupload');
 const cityConverter = require('./cityConverter')
 
 const app = express()
-const port = 8081
+const port = process.env.PORT || 3000
 
 const getHttpErrorHandler = response => err => {
 	console.error(err)
@@ -31,9 +31,9 @@ app.post('/', ({files}, response) => {
 	}
 })
 
-app.listen(port, err => {
+const server = app.listen(port, err => {
 	if (err) {
 		return console.error(err)
 	}
-	console.log(`City to ExpenseManager converter is running at http://127.0.0.1:${port}/`)
+	console.log(`City to ExpenseManager converter is running at http://${server.address().address}:${port}/`)
 })

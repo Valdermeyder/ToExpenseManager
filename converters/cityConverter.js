@@ -1,7 +1,7 @@
 const parseSync = require('csv-parse/lib/sync')
 const transform = require('stream-transform')
 const moment = require('moment')
-const categoryResolver = require('./categoryResolver')
+const categoryResolver = require('../categoryResolver')
 
 const payerFilter = /\s+\w+\s+\w+$/i
 const columns = ['date', 'description', 'amount']

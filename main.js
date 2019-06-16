@@ -1,7 +1,8 @@
 const express = require('express')
 const path = require('path')
 const fileUpload = require('express-fileupload');
-const cityConverter = require('./cityConverter')
+const cityConverter = require('./converters/cityConverter')
+const pkoConverter = require('./converters/pkoConverter')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -19,9 +20,10 @@ app.get('/', (request, response) => {
 
 const getCategoriesMapping = (file = {}) => file.data && JSON.parse(file.data)
 
-app.post('/', ({files}, response) => {
+app.post('/', ({files, body: {bank}}, response) => {
 	if (files && files.file) {
-		cityConverter
+		const converter = bank === 'pko' ? pkoConverter : cityConverter
+		converter
 			.convertCvsFileData(files.file.data, getCategoriesMapping(files.categoriesMapping))
 			.on('finish', () => response.end())
 			.on('error', getHttpErrorHandler(response))
@@ -35,5 +37,5 @@ const server = app.listen(port, err => {
 	if (err) {
 		return console.error(err)
 	}
-	console.log(`City to ExpenseManager converter is running at http://${server.address().address}:${port}/`)
+	console.info(`City to ExpenseManager converter is running at http://${server.address().address}:${port}/`)
 })

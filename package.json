@@ -20,7 +20,7 @@
   "email": "vguzar@i.ua",
   "license": "ISC",
   "dependencies": {
-    "csv-parse": "^2.0.0",
+    "csv-parse": "^4.4.6",
     "express": "^4.16.2",
     "express-fileupload": "^0.3.0",
     "moment": "^2.18.1",

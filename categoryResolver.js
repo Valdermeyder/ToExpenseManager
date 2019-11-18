@@ -2,7 +2,14 @@ const payerIncludesCategory = payer => payerFromCfg => new RegExp(payerFromCfg, 
 
 const getCategoryConf = (payer, categoriesMapping = {}) => categoriesMapping[payer]
 	|| categoriesMapping[
-		Object.keys(categoriesMapping).find(payerIncludesCategory(payer))
+	Object.keys(categoriesMapping).find(payerIncludesCategory(payer))
 	]
 
-exports.resolveCategory = categoriesMapping => payer => getCategoryConf(payer, categoriesMapping) || { category: '', subCategory: '' }
+exports.resolveCategory = categoriesMapping => (payer, amount) => {
+	const fullCategory = getCategoryConf(payer, categoriesMapping) || { category: '', subCategory: '' }
+	if (amount && amount > 0 && fullCategory.category !== 'Income') {
+		return { category: 'Income', subCategory: ''}
+	}
+	return fullCategory;
+}
+

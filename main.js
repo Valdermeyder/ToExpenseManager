@@ -20,9 +20,12 @@ app.get('/', (request, response) => {
 
 const getCategoriesMapping = (file = {}) => file.data && JSON.parse(file.data)
 
-app.post('/', ({files, body: {bank}}, response) => {
+app.post('/', ({ files, body: { bank } }, response) => {
 	if (files && files.file) {
 		const converter = bank === 'pko' ? pkoConverter : cityConverter
+		response.set({
+			'Content-Type': 'text/plain; charset=utf-8'
+		})
 		converter
 			.convertCvsFileData(files.file.data, getCategoriesMapping(files.categoriesMapping))
 			.on('finish', () => response.end())

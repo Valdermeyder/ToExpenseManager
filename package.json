@@ -20,18 +20,18 @@
   "email": "vguzar@i.ua",
   "license": "ISC",
   "dependencies": {
-    "csv-parse": "^2.0.0",
+    "csv-parse": "^4.8.2",
     "express": "^4.16.2",
-    "express-fileupload": "^0.3.0",
+    "express-fileupload": "^1.1.6",
     "moment": "^2.18.1",
-    "stream-transform": "^1.0.0"
+    "stream-transform": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^4.8.0",
-    "eslint-config-esnext": "^1.6.0",
-    "eslint-config-node": "^1.6.0",
+    "eslint": "^6.7.0",
+    "eslint-config-esnext": "^4.0.0",
+    "eslint-config-node": "^4.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jest": "^21.3.2",
-    "jest": "^21.2.1"
+    "eslint-plugin-jest": "^23.0.4",
+    "jest": "^24.9.0"
   }
 }

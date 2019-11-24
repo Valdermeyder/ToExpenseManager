@@ -4,17 +4,29 @@ const moment = require('moment')
 const categoryResolver = require('../categoryResolver')
 
 const payerFilter = /\s+\w+\s+\w+$/i
-const columns = ['date', 'description', 'amount']
+const columns = ['date', 'description', 'amount', 'balance', 'magicNumber', 'type']
 
 const parseAmount = amount => parseFloat(amount.replace('.', '').replace(',', '.'))
 
 const parsePayer = payer => (payer && payer.replace(payerFilter, '').replace(',', ''))
 
+const getPayerByTransaction = transactionType => {
+	switch (transactionType) {
+		case 'ODSETKI - LOKATA TERMINOWA':
+			return 'Deposit'
+	}
+}
+
 const getExpenseManagerRecord = recordCategoryResolver => record => {
-	const payer = parsePayer(record[columns[1]]);
-	const { category, subCategory } = recordCategoryResolver(payer);
+	const transactionType = record[columns[5]]
+	const payer = getPayerByTransaction(transactionType) || parsePayer(record[columns[1]]);
+	if (payer.startsWith('SPŁATA') || transactionType === 'SPŁATA KARTY KREDYTOWEJ') {
+		return null;
+	}
+	const amount = parseAmount(record[columns[2]])
+	const { category, subCategory } = recordCategoryResolver(payer, amount);
 	return moment(record[columns[0]], 'DD/MM/YYYY').format('DD.MM.YYYY') + ','
-		+ parseAmount(record[columns[2]]) + ',' + category + ',' + subCategory
+		+ amount + ',' + category + ',' + subCategory
 		+ ',Credit Card,,,' + payer
 		+ ',,,CitiBank\n'
 }

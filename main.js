@@ -28,7 +28,7 @@ app.post('/', ({ files, body: { bank } }, response) => {
 		})
 		converter
 			.convertCvsFileData(files.file.data, getCategoriesMapping(files.categoriesMapping))
-			.on('finish', () => response.end())
+			.on('finish', () => setTimeout(() => response.end()))
 			.on('error', getHttpErrorHandler(response))
 			.pipe(response);
 	} else {

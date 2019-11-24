@@ -4,8 +4,18 @@ const groceries = {
     category: "Food",
     subCategory: "Groceries"
 }
+const income = {
+    category: 'Income',
+    subCategory: ''
+
+}
+const incomeDeposit = {
+    category: 'Income',
+    subCategory: 'Deposit'
+}
 const categoriesMapping = {
-    CARREFOUR: groceries
+    CARREFOUR: groceries,
+    deposit: incomeDeposit
 }
 
 test('should return object with empty values if payer is not found in found in configuration', () => {
@@ -30,4 +40,16 @@ test('should be able to use part of word when parse name of payer and configurat
 
 test('should parse name of payer part of each is present in configuration entity', () => {
     expect(categoryResolver.resolveCategory(categoriesMapping)('CARREFOUR EXPRESS 3561')).toEqual(groceries)
+})
+
+test('should return Income category when amount is bigger than 0', () => {
+    expect(categoryResolver.resolveCategory(categoriesMapping)('any', 0.01)).toEqual(income)
+})
+
+test('should return Income category when amount is bigger than 0 even when other was set before', () => {
+    expect(categoryResolver.resolveCategory(categoriesMapping)('carrefour.pl', 0.01)).toEqual(income)
+})
+
+test('should not change Income category when amount is bigger than 0 even when other was set before', () => {
+    expect(categoryResolver.resolveCategory(categoriesMapping)('Deposit', 0.01)).toEqual(incomeDeposit)
 })

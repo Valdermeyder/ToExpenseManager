@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const fileUpload = require('express-fileupload');
+const { normalizeCategories } = require("./mappingNormalizer");
 const cityConverter = require('./converters/cityConverter')
 const pkoConverter = require('./converters/pkoConverter')
 
@@ -18,7 +19,7 @@ app.get('/', (request, response) => {
 	response.sendFile(path.join(__dirname, 'index.html'))
 })
 
-const getCategoriesMapping = (file = {}) => file.data && JSON.parse(file.data)
+const getCategoriesMapping = (file = {}) => normalizeCategories(file.data && JSON.parse(file.data))
 
 app.post('/', ({ files, body: { bank } }, response) => {
 	if (files && files.file) {

@@ -24,11 +24,14 @@ const getCategoriesMapping = (file = {}) => normalizeCategories(file.data && JSO
 app.post('/', ({ files, body: { bank } }, response) => {
 	if (files && files.file) {
 		const converter = bank === 'pko' ? pkoConverter : cityConverter
+		const csvFile = files.file;
+		const originalFileName = csvFile.name.slice(0, -4)
 		response.set({
-			'Content-Type': 'text/plain; charset=utf-8'
+			'Content-Type': 'text/plain; charset=utf-8',
+			'Content-Disposition': `attachment; filename=${originalFileName}-converted.csv`
 		})
 		converter
-			.convertCvsFileData(files.file.data, getCategoriesMapping(files.categoriesMapping))
+			.convertCvsFileData(csvFile.data, getCategoriesMapping(files.categoriesMapping))
 			.on('finish', () => setTimeout(() => response.end()))
 			.on('error', getHttpErrorHandler(response))
 			.pipe(response);

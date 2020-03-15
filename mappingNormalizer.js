@@ -1,4 +1,4 @@
-exports.normalizeCategories = (categories) => Object.keys(categories).reduce((payerByCategory, categoryKey) => {
+exports.normalizeCategories = (categories) => categories && Object.keys(categories).reduce((payerByCategory, categoryKey) => {
     const category = categories[categoryKey];
     return Object.keys(category).reduce((subCategoriesWithPayers, subCategoryKey) => {
         const payers = category[subCategoryKey] || []

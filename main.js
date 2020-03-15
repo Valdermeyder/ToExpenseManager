@@ -32,18 +32,22 @@ function selectConverter(bank) {
 
 app.post('/', ({ files, body: { bank } }, response) => {
 	if (files && files.file) {
-		const converter = selectConverter(bank)
-		const csvFile = files.file;
-		const originalFileName = csvFile.name.slice(0, -4)
-		response.set({
-			'Content-Type': 'text/plain; charset=utf-8',
-			'Content-Disposition': `attachment; filename=${originalFileName}-converted.csv`
-		})
-		converter
-			.convertCvsFileData(csvFile.data, getCategoriesMapping(files.categoriesMapping))
-			.on('finish', () => setTimeout(() => response.end()))
-			.on('error', getHttpErrorHandler(response))
-			.pipe(response);
+		try {
+			const converter = selectConverter(bank)
+			const csvFile = files.file;
+			const originalFileName = csvFile.name.slice(0, -4)
+			response.set({
+				'Content-Type': 'text/plain; charset=utf-8',
+				'Content-Disposition': `attachment; filename=${originalFileName}-converted.csv`
+			})
+			converter
+				.convertCvsFileData(csvFile.data, getCategoriesMapping(files.categoriesMapping))
+				.on('finish', () => setTimeout(() => response.end()))
+				.on('error', getHttpErrorHandler(response))
+				.pipe(response);
+		} catch (err) {
+			response.status(500).send(err);
+		}
 	} else {
 		response.status(400).send('No file was uploaded.')
 	}

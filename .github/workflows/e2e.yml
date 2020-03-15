@@ -1,4 +1,4 @@
-name: Node CI
+name: E2E tests
 
 on: push
 
@@ -11,8 +11,7 @@ jobs:
     - name: Yarn CLI
       uses: CultureHQ/actions-yarn@v1.0.1
     - name: install
-      run: yarn install      
-    - name: test
-      run: yarn test --ci
-      env:
-        CI: true
+      run: yarn install 
+    - uses: docker://circleci/node:8-browsers
+    - name: Run e2e tests
+      run: yarn run e2e:ci

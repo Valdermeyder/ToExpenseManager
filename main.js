@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload');
 const { normalizeCategories } = require("./mappingNormalizer");
 const cityConverter = require('./converters/cityConverter')
 const pkoConverter = require('./converters/pkoConverter')
+const nestConverter = require('./converters/nestConverter')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -21,9 +22,17 @@ app.get('/', (request, response) => {
 
 const getCategoriesMapping = (file = {}) => normalizeCategories(file.data && JSON.parse(file.data))
 
+function selectConverter(bank) {
+	switch (bank) {
+		case 'pko': return pkoConverter
+		case 'nest': return nestConverter
+		default: return cityConverter
+	}
+}
+
 app.post('/', ({ files, body: { bank } }, response) => {
 	if (files && files.file) {
-		const converter = bank === 'pko' ? pkoConverter : cityConverter
+		const converter = selectConverter(bank)
 		const csvFile = files.file;
 		const originalFileName = csvFile.name.slice(0, -4)
 		response.set({
@@ -44,5 +53,5 @@ const server = app.listen(port, err => {
 	if (err) {
 		return console.error(err)
 	}
-	console.info(`City to ExpenseManager converter is running at http://${server.address().address}:${port}/`)
+	console.info(`To ExpenseManager converter is running at http://${server.address().address}:${port}/`)
 })

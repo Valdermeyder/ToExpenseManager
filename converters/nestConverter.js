@@ -11,22 +11,17 @@ const parseAmount = amount => parseFloat(amount)
 
 const payerIdentificator = '|Nr karty ...';
 const cardNumberLength = 5;
-const parsePayer = payer => {
-	if (payer) {
-		const indexAfterPrefix = payer.indexOf(payerIdentificator) + payerIdentificator.length + cardNumberLength
-		const indexAfterCity = payer.indexOf(' ', indexAfterPrefix) + 1
-		return payer.slice(indexAfterCity, payer.lastIndexOf(' '))
-	}
-	return ''
-}
+const extractPayer = (payerString) => payerString ? payerString.split('|')[0] : ''
+const parsePayer = (payerFromTitle, payer) => extractPayer(payer || payerFromTitle)
 
 const getExpenseManagerRecord = recordCategoryResolver => record => {
 	const amount = parseAmount(record[columns[3]]);
-	const payer = parsePayer(record[columns[7]]);
+	const description = record[columns[7]]
+	const payer = parsePayer(description, record[columns[5]]);
 	const { category, subCategory } = recordCategoryResolver(payer, amount);
 	return moment(record[columns[1]], 'DD-MM-YYYY').format('DD.MM.YYYY') + ','
 		+ amount + ',' + category + ',' + subCategory
-		+ ',Credit Card,,,' + sanitizePayer(payer)
+		+ ',Credit Card,"' + description + '",,' + sanitizePayer(payer)
 		+ ',,,Nest\n'
 }
 

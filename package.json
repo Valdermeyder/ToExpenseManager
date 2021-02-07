@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node main.js",
     "test": "jest",
-    "e2e":"testcafe chrome ./e2e/*.js --app \"yarn start\"",
+    "e2e": "testcafe chrome ./e2e/*.js --app \"yarn start\"",
     "e2e:ci": "testcafe chrome:headless ./e2e/*.js --app \"yarn start\"",
     "deploy": "git push heroku master"
   },

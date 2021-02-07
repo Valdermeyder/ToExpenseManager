@@ -2,7 +2,7 @@ const parseSync = require('csv-parse/lib/sync')
 const transform = require('stream-transform')
 const moment = require('moment')
 const categoryResolver = require('../categoryResolver')
-const { sanitizePayer } = require('../payerUtils')
+const { sanitize } = require('../utils')
 
 const columns = ['Data księgowania', 'Data operacji', 'Rodzaj operacji', 'Kwota', 'Waluta', 'Dane kontrahenta', 'Numer rachunku kontrahenta',
 	'Tytuł operacji', 'Saldo po operacji']
@@ -21,7 +21,7 @@ const getExpenseManagerRecord = recordCategoryResolver => record => {
 	const { category, subCategory } = recordCategoryResolver(payer, amount);
 	return moment(record[columns[1]], 'DD-MM-YYYY').format('DD.MM.YYYY') + ','
 		+ amount + ',' + category + ',' + subCategory
-		+ ',Credit Card,"' + description + '",,' + sanitizePayer(payer)
+		+ ',Credit Card,' + sanitize(description) + ',,' + sanitize(payer)
 		+ ',,,Nest\n'
 }
 

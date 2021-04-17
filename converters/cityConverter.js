@@ -4,12 +4,11 @@ const moment = require('moment')
 const categoryResolver = require('../categoryResolver')
 const { sanitize } = require('../utils')
 
-const payerFilter = /\s+\w+\s+\w+$/i
 const columns = ['date', 'description', 'amount', 'balance', 'magicNumber', 'type']
 
 const parseAmount = amount => parseFloat(amount.replace('.', '').replace(',', '.'))
 
-const parsePayer = payer => (payer && payer.replace(payerFilter, '').replace(',', ''))
+const parsePayer = payer => (payer && payer.split('  ')[0].trim())
 
 const getPayerByTransaction = transactionType => {
 	switch (transactionType) {

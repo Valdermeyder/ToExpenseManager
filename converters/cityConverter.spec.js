@@ -8,9 +8,9 @@ const categoriesMapping = {
 
 test('should be able to convert Citi CSV files format', (done) => {
     const input = `"30/10/2019","Employer","9.839,29","9.997,16","'1234567890'","PRZELEW ZEWNETRZNY WPLATA"
-"28/10/2019","Play","-10,00","123,45","'1234567890'","PRZELEW DOŁADOWANIE KOMÓRKI"`
+"28/10/2019","Play SA         76920   Gdansk       PL 5575054750123136        10.00 PLN 08:52 210414","-10,00","123,45","'1234567890'","PRZELEW DOŁADOWANIE KOMÓRKI"`
     const expected = `30.10.2019,9839.29,Income,Salary,Credit Card,,,Employer,,,CitiBank
-28.10.2019,-10,Utilities,Telephone,Credit Card,,,Play,,,CitiBank
+28.10.2019,-10,Utilities,Telephone,Credit Card,,,Play SA,,,CitiBank
 `
     let transformedData = '';
 

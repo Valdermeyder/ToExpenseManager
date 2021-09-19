@@ -17,10 +17,15 @@ const getPayerByTransaction = transactionType => {
 	}
 }
 
+function shouldBeFilteredOut(payer, transactionType) {
+	return payer.startsWith('SPŁATA') || transactionType === 'SPŁATA KARTY KREDYTOWEJ' || transactionType === 'CREDIT CARD REPAYMENT' || transactionType === 'CITIBANK MASTERCARD PAYMENT'
+}
+
 const getExpenseManagerRecord = recordCategoryResolver => record => {
 	const transactionType = record[columns[5]]
-	const payer = getPayerByTransaction(transactionType) || parsePayer(record[columns[1]]);
-	if (payer.startsWith('SPŁATA') || transactionType === 'SPŁATA KARTY KREDYTOWEJ') {
+	const description = record[columns[1]]
+	const payer = getPayerByTransaction(transactionType) || parsePayer(description);
+	if (shouldBeFilteredOut(payer, transactionType)) {
 		return null;
 	}
 	const amount = parseAmount(record[columns[2]])

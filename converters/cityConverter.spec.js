@@ -32,8 +32,10 @@ test('should be able to convert Citi CSV files format', (done) => {
         })
 })
 
-test('should ignore "SPŁATA KARTY KREDYTOWEJ" transaction type', (done) => {
+test('should ignore paying credit type transactions', (done) => {
     const input = `"31/10/2019","1234567890","-4.592,54","5.404,62","'1234567890'","SPŁATA KARTY KREDYTOWEJ"
+"31/10/2019","1234567890","-4.592,54","5.404,62","'1234567890'","CREDIT CARD REPAYMENT"
+"31/10/2019","1234567890","-4.592,54","5.404,62","'1234567890'","CITIBANK MASTERCARD PAYMENT"
 "28/10/2019","Play","-10,00","123,45","'1234567890'","PRZELEW DOŁADOWANIE KOMÓRKI"`
     const expected = `28.10.2019,-10,Utilities,Telephone,Credit Card,,,Play,,,CitiBank
 `

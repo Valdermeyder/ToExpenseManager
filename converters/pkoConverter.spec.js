@@ -14,9 +14,11 @@ test('should be able to convert PKO CSV files format', (done) => {
     let transformedData = '';
 
     const converter = pkoConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('finish', () => {
@@ -41,9 +43,11 @@ test('should recognize payer by transaction type', (done) => {
     let transformedData = '';
 
     const converter = pkoConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('finish', () => {
@@ -63,9 +67,11 @@ test('should extract payer from "Nazwa nadawcy"', (done) => {
     let transformedData = '';
 
     const converter = pkoConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('finish', () => {

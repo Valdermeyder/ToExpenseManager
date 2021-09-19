@@ -9,10 +9,12 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
+    "lint": "eslint .",
     "test": "jest",
     "e2e": "testcafe chrome ./e2e/*.js --app \"yarn start\"",
     "e2e:ci": "testcafe chrome:headless ./e2e/*.js --app \"yarn start\"",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku master",
+    "prepare": "husky install"
   },
   "keywords": [
     "csv",
@@ -35,7 +37,8 @@
     "eslint-config-node": "^4.0.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jest": "^24.3.2",
-    "jest": "^26.5.3",
+    "husky": "^7.0.0",
+    "jest": "^27.2.0",
     "lodash": "^4.17.21",
     "testcafe": "^1.13.0"
   }

@@ -9,8 +9,6 @@ const columns = ['Data księgowania', 'Data operacji', 'Rodzaj operacji', 'Kwota
 
 const parseAmount = amount => parseFloat(amount)
 
-const payerIdentificator = '|Nr karty ...';
-const cardNumberLength = 5;
 const extractPayer = (payerString) => payerString ? payerString.split('|')[0] : ''
 const parsePayer = (payerFromTitle, payer) => extractPayer(payer || payerFromTitle)
 

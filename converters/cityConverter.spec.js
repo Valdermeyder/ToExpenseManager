@@ -14,14 +14,12 @@ test('should be able to convert Citi CSV files format', (done) => {
 `
     let transformedData = '';
 
-    citiConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            // eslint-disable-next-line no-invalid-this
-            let row = this.read()
+    const converter = citiConverter.convertCvsFileData(input, categoriesMapping)
+        .on('readable', () => {
+            let row = converter.read()
             while (row) {
                 transformedData += row
-                // eslint-disable-next-line no-invalid-this
-                row = this.read()
+                row = converter.read()
             }
         })
         .on('finish', () => {
@@ -42,9 +40,11 @@ test('should ignore paying credit type transactions', (done) => {
     let transformedData = '';
 
     const converter = citiConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('error', (err) => console.log(err.message))
@@ -64,9 +64,11 @@ test('should ignore records payer of which starts with "SPŁATA"', (done) => {
     let transformedData = '';
 
     const converter = citiConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('error', (err) => console.log(err.message))
@@ -87,9 +89,11 @@ test('should set payer as Deposit for transaction type "ODSETKI - LOKATA TERMINO
     let transformedData = '';
 
     const converter = citiConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('error', (err) => console.log(err.message))

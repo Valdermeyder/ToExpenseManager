@@ -13,10 +13,11 @@ const getHttpErrorHandler = response => err => {
 	console.error(err)
 	response.status(500).send('Something is broken. Details: ' + err)
 }
-app.use((err, request, response, next) => getHttpErrorHandler(response)(err))
+//eslint-disable-next-line no-unused-vars
+app.use((err, _, response, _next) => getHttpErrorHandler(response)(err))
 app.use(fileUpload())
 
-app.get('/', (request, response) => {
+app.get('/', (_, response) => {
 	response.sendFile(path.join(__dirname, 'index.html'))
 })
 

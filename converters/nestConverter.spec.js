@@ -23,9 +23,11 @@ Data księgowania,Data operacji,Rodzaj operacji,Kwota,Waluta,Dane kontrahenta,Nu
     let transformedData = '';
 
     const converter = nestConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('finish', () => {

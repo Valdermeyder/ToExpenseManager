@@ -8,13 +8,28 @@ const columns = ["Data operacji", "Data waluty", "Typ transakcji", "Kwota", "Wal
 
 const parseAmount = amount => parseFloat(amount)
 
-const payerIdentificator = 'Adres: ';
-const parsePayer = payer => payer && payer.slice(payer.indexOf(payerIdentificator) + payerIdentificator.length)
+const adresPayerIdentificator = 'Adres: ';
+const namePayerIdentificator = 'Nazwa nadawcy: ';
+
+function calculatePayerStartIndex(payer) {
+	if (payer.includes(adresPayerIdentificator)) {
+		return payer.indexOf(adresPayerIdentificator) + adresPayerIdentificator.length
+	}
+	if (payer.includes(namePayerIdentificator)) {
+		return payer.indexOf(namePayerIdentificator) + namePayerIdentificator.length
+	}
+	return 0;
+}
+
+const parsePayer = payer => payer && payer.slice(calculatePayerStartIndex(payer))
 
 const getPayerByTransaction = transactionType => {
 	switch (transactionType) {
-		case 'Prowizja': return 'Bank'
-		case 'Naliczenie odsetek': return 'Deposit'
+		case 'Op�ata za u�ytkowanie karty':
+		case 'Prowizja':
+			return 'Bank'
+		case 'Naliczenie odsetek':
+			return 'Deposit'
 		default:
 			return ''
 	}

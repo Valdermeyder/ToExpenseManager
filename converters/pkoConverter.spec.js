@@ -32,9 +32,33 @@ test('should recognize payer by transaction type', (done) => {
     };
     const input = `"Data operacji","Data waluty","Typ transakcji","Kwota","Waluta","Saldo po transakcji","Opis transakcji","","","",""
 "2019-10-12","2019-10-13","Naliczenie odsetek","+3.99","PLN","+12.91","Tytu³: ODSETKI NALE¯NE LOKATY NR00004","","","","",""
-"2019-05-15","2019-05-13","Prowizja","-6.00","PLN","+45.85","Tytu³: 74146649133000134676505","","","","",""`
+"2019-05-15","2019-05-13","Prowizja","-6.00","PLN","+45.85","Tytu³: 74146649133000134676505","","","","",""
+"2019-05-15","2019-05-13","Op�ata za u�ytkowanie karty","-6.00","PLN","+45.85","Tytu³: 74146649133000134676505","","","","",""`
     const expected = `13.10.2019,3.99,Income,Deposit,Credit Card,,,Deposit,,,PKO
 13.05.2019,-6,Bank,Commission,Credit Card,,,Bank,,,PKO
+13.05.2019,-6,Bank,Commission,Credit Card,,,Bank,,,PKO
+`
+    let transformedData = '';
+
+    const converter = pkoConverter.convertCvsFileData(input, categoriesMapping)
+        .on('readable', function () {
+            while (row = converter.read()) {
+                transformedData += row
+            }
+        })
+        .on('finish', () => {
+            expect(transformedData).toEqual(expected)
+            done()
+        })
+})
+
+test('should extract payer from "Nazwa nadawcy"', (done) => {
+    const categoriesMapping = {
+        'testowy nadawca': { category: 'Income', subCategory: 'Deposit' }
+    };
+    const input = `"Data operacji","Data waluty","Typ transakcji","Kwota","Waluta","Saldo po transakcji","Opis transakcji","","","",""
+"2019-10-12","2019-10-13","Przelew na rachunek","+3.99","PLN","+12.91","Rachunek nadawcy: 11 1111 1111 1111 1111 1111 1111","Nazwa nadawcy: testowy nadawca","","","",""`
+    const expected = `13.10.2019,3.99,Income,Deposit,Credit Card,,,testowy nadawca,,,PKO
 `
     let transformedData = '';
 

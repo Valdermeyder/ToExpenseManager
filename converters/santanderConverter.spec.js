@@ -14,9 +14,11 @@ test('should be able to convert PKO CSV files format', (done) => {
     let transformedData = '';
 
     const converter = santanderConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('finish', () => {
@@ -39,9 +41,11 @@ test.skip('should add synthetic payer from description', (done) => {
     let transformedData = '';
 
     const converter = santanderConverter.convertCvsFileData(input, categoriesMapping)
-        .on('readable', function () {
-            while (row = converter.read()) {
+        .on('readable', () => {
+            let row = converter.read()
+            while (row) {
                 transformedData += row
+                row = converter.read()
             }
         })
         .on('finish', () => {

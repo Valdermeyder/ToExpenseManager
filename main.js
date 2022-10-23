@@ -5,6 +5,7 @@ const { normalizeCategories } = require("./mappingNormalizer");
 const cityConverter = require('./converters/cityConverter')
 const pkoConverter = require('./converters/pkoConverter')
 const nestConverter = require('./converters/nestConverter')
+const santanderConverter = require('./converters/santanderConverter')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -27,6 +28,7 @@ function selectConverter(bank) {
 	switch (bank) {
 		case 'pko': return pkoConverter
 		case 'nest': return nestConverter
+		case 'santander': return santanderConverter
 		default: return cityConverter
 	}
 }

@@ -1,5 +1,5 @@
-const parseSync = require('csv-parse/lib/sync')
-const transform = require('stream-transform')
+const { parse } = require('csv-parse/sync')
+const { transform } = require('stream-transform')
 const moment = require('moment')
 const categoryResolver = require('../categoryResolver')
 const { sanitize } = require('../utils')
@@ -48,6 +48,6 @@ const getExpenseManagerRecord = recordCategoryResolver => record => {
 
 exports.convertCvsFileData = (input, categoriesMapping) => {
 	const getExpenseManagerWithMapping = getExpenseManagerRecord(categoryResolver.resolveCategory(categoriesMapping))
-	return transform(parseSync(input, { delimiter: ',', columns, relax_column_count: true }).slice(1).filter(record => record),
+	return transform(parse(input, { delimiter: ',', columns, relax_column_count: true }).slice(1).filter(record => record),
 		record => getExpenseManagerWithMapping(record))
 }

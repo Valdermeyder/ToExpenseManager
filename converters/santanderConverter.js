@@ -1,5 +1,5 @@
-const parseSync = require("csv-parse/lib/sync");
-const transform = require("stream-transform");
+const { parse } = require("csv-parse/sync");
+const { transform } = require("stream-transform");
 const moment = require("moment");
 const categoryResolver = require("../categoryResolver");
 const { sanitize } = require("../utils");
@@ -49,7 +49,7 @@ exports.convertCvsFileData = (input, categoriesMapping) => {
     categoryResolver.resolveCategory(categoriesMapping)
   );
   return transform(
-    parseSync(input, {
+    parse(input, {
       delimiter: ",",
       columns,
       relax_column_count: true,

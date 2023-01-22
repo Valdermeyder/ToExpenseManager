@@ -8,10 +8,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Yarn CLI
-      uses: CultureHQ/actions-yarn@v1.0.1
     - name: install
-      run: yarn install 
-    - uses: docker://circleci/node:8-browsers
+      run: npm install 
     - name: Run e2e tests
-      run: yarn run e2e:ci
+      uses: DevExpress/testcafe-action@latest
+      with:
+        args: chrome ./e2e/*.js --app "npm start"

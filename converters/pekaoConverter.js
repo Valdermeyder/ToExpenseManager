@@ -14,7 +14,7 @@ const columns = [
   "amount",
 ];
 
-const parseAmount = (amount) => parseFloat(amount.replace(",", "."));
+const parseAmount = (amount) => parseFloat(amount.replace(",", ".").replace(" ", ""));
 function descriptionToPayer(description) {
   if (description.startsWith("POBRANIE ZALEGŁEJ OPŁATY")) {
     return "Bank Commission";

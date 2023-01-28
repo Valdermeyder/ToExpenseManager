@@ -38,6 +38,6 @@ const getExpenseManagerRecord = recordCategoryResolver => record => {
 
 exports.convertCvsFileData = (input, categoriesMapping) => {
 	const getExpenseManagerWithMapping = getExpenseManagerRecord(categoryResolver.resolveCategory(categoriesMapping))
-	return transform(parse(input, { delimiter: ',', columns, relax: true, relax_column_count: true }),
+	return transform(parse(input, { delimiter: ',', columns, relax: true, relax_column_count: true, bom: true }),
 		record => getExpenseManagerWithMapping(record))
 }

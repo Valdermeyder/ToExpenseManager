@@ -1,0 +1,3 @@
+Data księgowania;Data waluty;Nadawca / Odbiorca;Adres nadawcy / odbiorcy;Rachunek źródłowy;Rachunek docelowy;Tytułem;Kwota operacji;Waluta;Numer referencyjny;Typ operacji
+03.02.2023;30.10.2019;Employer;02527695 011144300000002 Grunwaldzka 415,Gdansk;'25124012681111001119078209;;BLIK;9839,29;PLN;;PŁATNOŚĆ BLIK
+03.02.2023;28.10.2019;Play;01731751 007668500000008 Kocurki 2,Gdansk;'25124012681111001119078209;;BLIK;-10;PLN;;PŁATNOŚĆ BLIK

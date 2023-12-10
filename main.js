@@ -8,6 +8,7 @@ const nestConverter = require("./converters/nestConverter");
 const santanderConverter = require("./converters/santanderConverter");
 const pekaoConverter = require("./converters/pekaoConverter");
 const monobankConverter = require("./converters/monobankConverter");
+const velobankConverter = require("./converters/velobankConverter");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +40,8 @@ function selectConverter(bank) {
       return pekaoConverter;
     case "monobank":
       return monobankConverter;
+    case "velobank":
+      return velobankConverter;
     default:
       return cityConverter;
   }

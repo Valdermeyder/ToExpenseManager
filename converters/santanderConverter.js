@@ -16,12 +16,16 @@ const columns = [
 ];
 
 const parseAmount = (amount) => parseFloat(amount.replace(",", "."));
+function normalisePayer(payer) {
+  return payer.replace(/^.*PLN /, '')
+}
 function descriptionToPayer(description) {
   if (description.startsWith("Suma nagród za płatności")) {
     return "Santander returns";
   }
-  return description;
+  return normalisePayer(description);
 }
+
 function parsePayer(payer, description) {
   return payer || descriptionToPayer(description);
 }

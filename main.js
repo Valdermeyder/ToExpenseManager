@@ -8,6 +8,7 @@ const nestConverter = require("./converters/nestConverter");
 const santanderConverter = require("./converters/santanderConverter");
 const pekaoConverter = require("./converters/pekaoConverter");
 const monobankConverter = require("./converters/monobankConverter");
+const velobankConverter = require("./converters/velobankConverter");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -39,6 +40,8 @@ function selectConverter(bank) {
       return pekaoConverter;
     case "monobank":
       return monobankConverter;
+    case "velobank":
+      return velobankConverter;
     default:
       return cityConverter;
   }
@@ -63,7 +66,8 @@ app.post("/", ({ files, body: { bank } }, response) => {
         .on("error", getHttpErrorHandler(response))
         .pipe(response);
     } catch (err) {
-      response.status(500).send(err);
+      console.error('Unexpected error is occured', err)
+      response.status(500);
     }
   } else {
     response.status(400).send("No file was uploaded.");

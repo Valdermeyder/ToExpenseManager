@@ -66,7 +66,8 @@ app.post("/", ({ files, body: { bank } }, response) => {
         .on("error", getHttpErrorHandler(response))
         .pipe(response);
     } catch (err) {
-      response.status(500).send(err);
+      console.error('Unexpected error is occured', err)
+      response.status(500);
     }
   } else {
     response.status(400).send("No file was uploaded.");

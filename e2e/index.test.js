@@ -94,3 +94,17 @@ test('should download converted csv without mapping for Velobank', async t => {
     await t.expect(file).eql('30.10.2019,9839.29,Income,,Credit Card,,,Employer,,,GetIn\n28.10.2019,-10,,,Credit Card,,,Play,,,GetIn\n')
 })
     .after(() => unlinkSync(expectedFile))
+
+test('should download converted csv without mapping for Revolut', async t => {
+    expectedFile = join(`${homedir()}`, 'Downloads', 'testDataRevolut-converted.csv')
+    await t
+        .setFilesToUpload(Selector('#file'), 'testDataRevolut.csv')
+        .click(Selector('#revolut'))
+        .click(Selector('button'))
+
+    await waitForFile(expectedFile)
+    const file = readFileSync(expectedFile, 'utf-8')
+
+    await t.expect(file).eql('30.10.2019,9839.29,Income,,Credit Card,,,Employer,,,Revolut SEK\n28.10.2019,-10,,,Credit Card,,,Play,,,Revolut SEK\n')
+})
+    .after(() => unlinkSync(expectedFile))

@@ -35,7 +35,7 @@ test('should download converted csv without mapping for City by default', async 
     await waitForFile(expectedFile)
     const file = readFileSync(expectedFile, 'utf-8')
 
-    await t.expect(file).eql('30.10.2019,9839.29,Income,,Credit Card,,,Employer,,,CitiBank\n28.10.2019,-10,,,Credit Card,,,Play,,,CitiBank\n')
+    await t.expect(file).eql('30.10.2019,9839.29,Income,,Credit Card,,,Employer,,,Citi PLN\n28.10.2019,-10,,,Credit Card,,,Play,,,Citi PLN\n')
 })
     .after(() => unlinkSync(expectedFile))
 

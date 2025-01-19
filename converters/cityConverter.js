@@ -21,9 +21,17 @@ function shouldBeFilteredOut(payer, transactionType) {
 	return payer.startsWith('SPŁATA') || transactionType === 'SPŁATA KARTY KREDYTOWEJ' || transactionType === 'CREDIT CARD REPAYMENT' || transactionType === 'CITIBANK MASTERCARD PAYMENT'
 }
 
+function findCurrencyInDescription(description) {
+	if (description.includes('EUR')) {
+		return 'EUR'
+	}
+	return 'PLN'
+}
+
 const getExpenseManagerRecord = recordCategoryResolver => record => {
 	const transactionType = record[columns[5]]
 	const description = record[columns[1]]
+	const currency = findCurrencyInDescription(description)
 	const payer = getPayerByTransaction(transactionType) || parsePayer(description);
 	if (shouldBeFilteredOut(payer, transactionType)) {
 		return null;
@@ -33,7 +41,7 @@ const getExpenseManagerRecord = recordCategoryResolver => record => {
 	return moment(record[columns[0]], 'DD/MM/YYYY').format('DD.MM.YYYY') + ','
 		+ amount + ',' + category + ',' + subCategory
 		+ ',Credit Card,,,' + sanitize(payer)
-		+ ',,,CitiBank\n'
+		+ ',,,Citi ' + currency + '\n'
 }
 
 exports.convertCvsFileData = (input, categoriesMapping) => {

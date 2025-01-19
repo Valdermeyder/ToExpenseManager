@@ -1,7 +1,7 @@
 {
-  "name": "citi_to_expense_manager_csv_converter",
+  "name": "to_expense_manager_csv_converter",
   "version": "1.0.0",
-  "description": "Convert CSV files from Citi to Expense Manager format",
+  "description": "Convert CSV files from different bank CSVs to Expense Manager format",
   "repository": {
     "type": "git",
     "url": "https://github.com/Valdermeyder/CityToExpenseManager.git"

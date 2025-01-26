@@ -58,6 +58,7 @@ exports.convertCvsFileData = (input, categoriesMapping) => {
       columns,
       relax_column_count: true,
       relax: true,
+      relax_quotes: true
     })
       .slice(1)
       .filter((record) => record),

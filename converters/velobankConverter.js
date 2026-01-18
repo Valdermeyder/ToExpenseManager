@@ -8,11 +8,19 @@ const columns = ['date', 'realDate', 'description', 'amount', 'balance']
 const parseAmount = amount => parseFloat(amount.replace(' ', '').replace(',', '.'))
 
 const parseDescription = description => {
+    // If transfer details include a title line, use it as payer
+    // Example (multiline description):
+    // Przelew z rachunku: ...\nNadawca: ...\nTytu?: BLIK: P?atno?? BLIK w sklepie
+    const titleMatch = description.match(/Tytu\?:\s*([^\n\r]+)/i)
+    if (titleMatch) {
+        return titleMatch[1].trim()
+    }
 	const descriptionParts = description.split(',')
 	if (descriptionParts.length === 1) {
 		return descriptionParts[0]
 	}
-	const payerPart = descriptionParts[1]
+	const numberOfCartParts = (description.match(/Operacja kart/gi) || []).length
+	const payerPart = descriptionParts[numberOfCartParts]
 	return payerPart.replace('w ', '').replace(/\d+ PLN/, '').trim()
 }
 

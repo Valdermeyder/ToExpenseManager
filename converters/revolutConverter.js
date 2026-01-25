@@ -53,7 +53,8 @@ exports.convertCvsFileData = (input, categoriesMapping) => {
       relax: true,
       relax_column_count: true,
       bom: true,
-    }).slice(1).filter((record) => record[columns[0]] === 'CARD_PAYMENT'),
+    }).slice(1)
+      .filter((record) => record[columns[4]] !== 'Depositing savings' && record[columns[4]] !== 'Withdrawing savings'),
     (record) => getExpenseManagerWithMapping(record)
   );
 };

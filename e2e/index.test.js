@@ -77,7 +77,7 @@ test('should download converted csv without mapping for Santander', async t => {
     await waitForFile(expectedFile)
     const file = readFileSync(expectedFile, 'utf-8')
 
-    await t.expect(file).eql('30.10.2019,9839.29,Income,,Credit Card,,,Employer,,,Santander\n28.10.2019,-10,,,Credit Card,,,Play,,,Santander\n')
+    await t.expect(file).eql('30.10.2019,9839.29,Income,,Credit Card,opłata za luty,,Employer,,,Santander\n28.10.2019,-10,,,Credit Card,opłata za internet za potoczny miesią,,Play,,,Santander\n27.10.2019,-5,,,Credit Card,VISA SEL 123456******1234 PŁATNOŚĆ KARTĄ 5.00 EUR Gate Retail Wizz EUR Luton,,Gate Retail Wizz,,,Santander EUR\n30.09.2023,-2.16,,,Credit Card,Opłata za prowadzenie rachunku od 01.09.2023 do 30.09.2023,,Santander,,,Santander\n')
 })
     .after(() => unlinkSync(expectedFile))
 
